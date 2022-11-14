@@ -1,0 +1,24 @@
+#BlueJ class context
+comment0.target=Boid
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Boid\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=
+comment1.target=Boid()
+comment10.params=
+comment10.target=double\ getAngle()
+comment2.params=
+comment2.target=void\ act()
+comment3.params=head\ sep
+comment3.target=void\ accum(int,\ double)
+comment4.params=boids
+comment4.target=double\ getSeperation(java.util.List)
+comment5.params=boids
+comment5.target=int\ getHeading(java.util.List)
+comment6.params=
+comment6.target=java.util.List\ getBoidsInCone()
+comment7.params=x\ y
+comment7.target=double\ getDist(int,\ int)
+comment8.params=
+comment8.target=void\ accumMove()
+comment9.params=
+comment9.target=double\ getSpeed()
+numComments=11

@@ -1,0 +1,26 @@
+#BlueJ class context
+comment0.target=SmoothMover
+comment0.text=\r\n\ A\ variation\ of\ an\ actor\ that\ maintains\ a\ precise\ location\ (using\ doubles\ for\ the\ co-ordinates\r\n\ instead\ of\ ints).\ \ This\ allows\ small\ precise\ movements\ (e.g.\ movements\ of\ 1\ pixel\ or\ less)\r\n\ that\ do\ not\ lose\ precision.\r\n\ \r\n\ @author\ Poul\ Henriksen\r\n\ @author\ Michael\ Kolling\r\n\ @author\ Neil\ Brown\r\n\ \r\n\ @version\ 3.0\r\n
+comment1.params=
+comment1.target=void\ act()
+comment2.params=distance
+comment2.target=void\ move(int)
+comment2.text=\r\n\ Move\ forward\ by\ the\ specified\ distance.\r\n\ (Overrides\ the\ method\ in\ Actor).\r\n
+comment3.params=distance
+comment3.target=void\ move(double)
+comment3.text=\r\n\ Move\ forward\ by\ the\ specified\ exact\ distance.\r\n
+comment4.params=x\ y
+comment4.target=void\ setLocation(double,\ double)
+comment4.text=\r\n\ Set\ the\ location\ using\ exact\ coordinates.\r\n
+comment5.params=x\ y
+comment5.target=void\ setLocation(int,\ int)
+comment5.text=\r\n\ Set\ the\ location\ using\ integer\ coordinates.\r\n\ (Overrides\ the\ method\ in\ Actor.)\r\n
+comment6.params=
+comment6.target=double\ getExactX()
+comment6.text=\r\n\ Return\ the\ exact\ x-coordinate\ (as\ a\ double).\r\n
+comment7.params=
+comment7.target=double\ getExactY()
+comment7.text=\r\n\ Return\ the\ exact\ y-coordinate\ (as\ a\ double).\r\n
+comment8.params=
+comment8.target=void\ borderless()
+numComments=9

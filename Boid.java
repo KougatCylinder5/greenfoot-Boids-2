@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class Boid extends SmoothMover
 {
-    private double speed = 5; 
+    private double speed = 6; 
     private int angle = 0;
     private ConeDetector detector = new ConeDetector();
     public Boid(){
@@ -18,29 +18,62 @@ public class Boid extends SmoothMover
     }
     public void act(){
         List boids = getBoidsInCone();
-        accum(getHeading(boids),getSeperation(boids));
+        accum(getHeading(boids),getSeperation(boids),getCohesion(boids));
         borderless();
         
     }
-    public void accum(int head, double sep){
-        setRotation(head + (int)sep + this.angle);
-        this.angle += head + sep; 
+    public void accum(int head, double sep, int coh){
+        setRotation(head + (int)sep + coh + this.angle);
+        this.angle += head + sep + coh; 
         move(this.speed);
     }
-    public double getSeperation(List boids){
-        double aHeading = 0;
+    public int getCohesion(List boids){
+        int aX = 0;
+        int aY = 0;
         for(int i = 0; i < boids.size(); i++){
             Boid boid = (Boid)boids.get(i);
-            turnTowards(boid.getX(),boid.getY());
-            aHeading = -(this.angle-getRotation()) * 1;
+            if(getDist(boid.getX(),boid.getY()) > 15){
+                aX += boid.getX();
+                aY += boid.getY();
+            }
+            
         }
         try{
-            aHeading /= boids.size();
+            aX /= boids.size();
+            aY /= boids.size();
+            turnTowards(aX,aY);
+            int angle = getRotation() - this.angle;
+            setRotation(this.angle);
+            return angle > 0 ? (angle > 5 ? 5 : angle) : (angle < -5 ? -5 : angle);
         }catch(ArithmeticException e){
-            aHeading = 0;   
+            aX = 0;
+            aY = 0;
+            return 0;
         }
+        
+    }
+    public double getSeperation(List boids){
+        List ratios = new ArrayList<Double>();
+        for(int i = 0; i < boids.size(); i++){
+            Boid boid = (Boid)boids.get(i);
+            if(getDist(boid.getX(),boid.getY()) < 50){
+                turnTowards(boid.getX(),boid.getY());
+                ratios.add(180-(50-getDist(boid.getX(),boid.getY()))/50 * getRotation());
+            }
+        }
+        double ratio = 0;
+        for(int i = 0; i < ratios.size(); i++){
+            ratio += (double)ratios.get(i);
+        }
+
+        ratio /= ratios.size();
+        ratio -= this.angle;
         setRotation(this.angle);
-        return aHeading > 0 ? (aHeading > 5 ? 5 : aHeading) : (aHeading < -5 ? -5 : aHeading);
+        if(Double.isNaN(ratio)){
+            return 0;
+        }else{
+            return ratio > 0 ? (ratio > 15 ? 15 : ratio) : (ratio < -15 ? -15 : ratio);
+        }
     }
     public int getHeading(List boids){
         int aHeading = 0;
@@ -50,17 +83,16 @@ public class Boid extends SmoothMover
         try{
             aHeading /= boids.size();
         }catch(ArithmeticException e){
-            aHeading = 0;   
+            aHeading = this.angle;   
         }
         
         aHeading -= this.angle;
-        return aHeading > 0 ? (aHeading > 15 ? 15 : aHeading) : (aHeading < -15 ? -15 : aHeading);
+        return aHeading > 0 ? (aHeading > 5 ? 5 : aHeading) : (aHeading < -5 ? -5 : aHeading);
     }
     public List getBoidsInCone(){
         Set boids = new HashSet<>();
-        
         getWorld().addObject(detector,getX(),getY());
-        for(int i = -120; i < 120; i+= 1){
+        for(int i = -90; i < 90; i+= 1){
             detector.setLocation(getX() + Math.cos(Math.toRadians(i + getRotation())) * 50,getY() + Math.sin(Math.toRadians(i + getRotation())) * 50);
             detector.borderless();
             detector.turnTowards(getX(),getY());

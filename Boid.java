@@ -72,7 +72,7 @@ public class Boid extends SmoothMover
         if(Double.isNaN(ratio)){
             return 0;
         }else{
-            return ratio > 0 ? (ratio > 15 ? 15 : ratio) : (ratio < -15 ? -15 : ratio);
+            return ratio > 0 ? (ratio > 5 ? 5 : ratio) : (ratio < -5 ? -5 : ratio);
         }
     }
     public int getHeading(List boids){
